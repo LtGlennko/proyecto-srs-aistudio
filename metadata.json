@@ -1,0 +1,5 @@
+{
+  "name": "DocenteApp",
+  "description": "Aplicación móvil educativa para la gestión de cursos, horarios y actividades para docentes.",
+  "requestFramePermissions": []
+}
