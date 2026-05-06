@@ -36,28 +36,40 @@ export const DonutChart: React.FC<DonutChartProps> = ({
   }
 
   if (segments) {
-    // Multi-segment chart (SÍ/NO)
+    // Multi-segment chart (SÍ/NO or others)
+    const totalValue = segments.reduce((acc, s) => acc + s.value, 0);
     let cumulative = 0;
-    const gradientParts = segments.map(s => {
+    
+    const processedSegments = segments.map(s => {
+      const percentage = totalValue > 0 ? (s.value / totalValue) * 100 : 0;
       const start = cumulative;
-      cumulative += s.value;
-      return `${s.color} ${start}% ${cumulative}%`;
+      cumulative += percentage;
+      return { 
+        ...s, 
+        percentage, 
+        start, 
+        end: cumulative 
+      };
+    });
+
+    const gradientParts = processedSegments.map(s => {
+      return `${s.color} ${s.start}% ${s.end}%`;
     }).join(', ');
 
     const isYesNo = segments.length === 2 && segments[0].label === 'SÍ' && segments[1].label === 'NO';
 
     return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-full">
         <div 
           className="rounded-full relative shadow-lg flex items-center justify-center ring-4 ring-white overflow-hidden" 
           style={{ 
             width: size, 
             height: size,
-            background: `conic-gradient(${gradientParts})` 
+            background: totalValue === 0 ? '#e5e7eb' : `conic-gradient(${gradientParts})` 
           }}
         >
           {/* Text labels inside segments (only for SÍ/NO case) */}
-          {isYesNo && (
+          {isYesNo && totalValue > 0 && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                <div className="relative w-full h-full">
                   <span className="absolute top-[25%] left-[60%] text-[10px] font-bold text-white">SÍ</span>
@@ -70,11 +82,13 @@ export const DonutChart: React.FC<DonutChartProps> = ({
         </div>
 
         {showLegend && (
-          <div className="flex gap-6 mt-6">
-            {segments.map((s, i) => (
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6">
+            {processedSegments.map((s, i) => (
               <div key={i} className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }}></div>
-                <span className="text-[10px] font-bold text-[#191c23]">{s.label} ({s.value}%)</span>
+                <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: s.color }}></div>
+                <span className="text-[10px] font-bold text-[#191c23] whitespace-nowrap">
+                  {s.label} ({totalValue > 0 ? Math.round(s.percentage) : 0}%)
+                </span>
               </div>
             ))}
           </div>

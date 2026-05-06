@@ -41,7 +41,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onNavigate, onSelectRo
         <button 
           onClick={() => {
             onSelectRole('docente');
-            onNavigate('S19a');
+            onNavigate('S19c');
           }}
           className="w-full p-6 bg-[#f2f3fd] rounded-2xl flex items-center gap-4 hover:bg-[#e6e8f2] transition-all active:scale-95 text-left"
         >

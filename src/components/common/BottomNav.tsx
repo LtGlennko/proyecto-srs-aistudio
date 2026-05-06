@@ -8,7 +8,7 @@ interface BottomNavProps {
 
 export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onNavigate }) => {
   const tabs = [
-    { id: 'Cursos', icon: 'school', screen: 'S19a' as ScreenId },
+    { id: 'Cursos', icon: 'school', screen: 'S19c' as ScreenId },
     { id: 'Actividades', icon: 'assignment', screen: 'S20_ActividadesDocente' as ScreenId },
     { id: 'Perfil', icon: 'account_circle', screen: 'Perfil' as ScreenId },
   ];

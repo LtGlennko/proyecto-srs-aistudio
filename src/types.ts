@@ -7,20 +7,76 @@ export type ScreenId =
   | 'S21b' | 'S21c' | 'S21d' | 'S21e' | 'S21f' | 'S21h' | 'S21j'
   | 'S18' | 'S26' | 'S27';
 
+export interface Course {
+  id: string;
+  name: string;
+  code: string;
+  ciclo: number;
+  creditos: number;
+  description?: string;
+}
+
+export interface Activity {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  description?: string;
+}
+
+export interface Interaction {
+  id: number;
+  text: string;
+  description?: string;
+  options: string[];
+  correctOptions?: number[]; // indices of correct options
+  type: 'opcion_multiple' | 'verdadero_falso' | 'nube_palabras' | 'ranking' | 'texto_libre';
+  settings?: {
+    multipleAnswers?: boolean;
+    showResults?: boolean;
+    timeLimit?: number;
+    showLeaderboard?: boolean;
+    includeDescription?: boolean;
+    charLimit?: number;
+    answersPerStudent?: number;
+  };
+}
+
 export interface ScreenProps {
   onNavigate: (screen: ScreenId) => void;
   userRole?: 'docente' | 'alumno' | null;
   hasActivity?: boolean;
-  onActivityCreated?: () => void;
+  onActivityCreated?: (activity: Activity) => void;
+  onActivityUpdated?: (activity: Activity) => void;
   hasInteraction?: boolean;
-  onInteractionCreated?: (text: string, options: string[]) => void;
+  onInteractionCreated?: (interaction: Interaction) => void;
+  onInteractionUpdated?: (interaction: Interaction) => void;
+  editingInteraction?: Interaction | null;
+  onSetEditingInteraction?: (interaction: Interaction | null) => void;
+  activeInteractionId?: number | null;
+  onToggleActiveInteraction?: (id: number) => void;
+  responseCounts?: { [id: number]: number };
   interactionCount?: number;
   isActivityFinished?: boolean;
   onActivityFinished?: () => void;
+  isActivityFinishedMap?: { [id: string]: boolean };
   hasConsultation?: boolean;
   isAnonimo?: boolean;
   hasConsultationsDocente?: boolean;
   onSimulate?: () => void;
   onSent?: (esAnonimo: boolean) => void;
-  questions?: { id: number; text: string; options: string[] }[];
+  hasCourse?: boolean;
+  onCourseCreated?: (course: Course) => void;
+  onCourseUpdated?: (course: Course) => void;
+  courses?: Course[];
+  selectedCourse?: Course | null;
+  onSelectCourse?: (course: Course) => void;
+  activities?: Activity[];
+  activitiesByCourse?: { [courseCode: string]: Activity[] };
+  selectedActivity?: Activity | null;
+  onSelectActivity?: (activity: Activity) => void;
+  questions?: Interaction[];
+  questionsByActivity?: { [activityId: string]: Interaction[] };
+  selectedInteractionType?: Interaction['type'];
+  onSelectInteractionType?: (type: Interaction['type']) => void;
 }

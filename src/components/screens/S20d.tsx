@@ -5,7 +5,7 @@ import { Breadcrumb } from '../common/Breadcrumb';
 import { BottomNav } from '../common/BottomNav';
 import { Tabs } from '../common/Tabs';
 
-export const S20d: React.FC<ScreenProps> = ({ onNavigate, hasConsultationsDocente, onSimulate }) => {
+export const S20d: React.FC<ScreenProps> = ({ onNavigate, hasConsultationsDocente, onSimulate, selectedCourse }) => {
   const [consultas, setConsultas] = useState([
     {
       id: 1,
@@ -59,11 +59,14 @@ export const S20d: React.FC<ScreenProps> = ({ onNavigate, hasConsultationsDocent
   return (
     <div className="bg-[#f9f9ff] text-[#191c23] min-h-screen flex flex-col font-inter relative">
       <Header 
-        backLabel="Lenguajes de Programación" 
-        onBack={() => onNavigate('S20a')} 
+        backLabel="Mis Cursos" 
+        onBack={() => onNavigate('S19c')} 
         showSettings={true}
+        onSettingsClick={() => onNavigate('S19b')}
+        title={selectedCourse?.name}
+        subtitle={selectedCourse?.code}
       />
-      <Breadcrumb items={['Cursos', 'Lenguajes de Programación', 'H386-A']} />
+      <Breadcrumb items={['Mis Cursos', selectedCourse?.name || 'Curso']} />
       <Tabs activeTab="Consultas" onNavigate={onNavigate} />
 
       <main className="flex-grow pt-[140px] pb-[80px] px-6 w-full">
@@ -91,43 +94,52 @@ export const S20d: React.FC<ScreenProps> = ({ onNavigate, hasConsultationsDocent
           </section>
         ) : (
           <div className="space-y-4 pt-4">
-            {consultas.map(c => {
-              const style = getEstadoStyle(c.estado);
-              return (
-                <div key={c.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-start gap-4">
-                  {c.avatar ? (
-                    <img src={c.avatar} alt={c.nombre} className="w-12 h-12 rounded-full object-cover" referrerPolicy="no-referrer" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-[#ecedf7] flex items-center justify-center">
-                      <span className="material-symbols-outlined text-[#727785]">person</span>
+            {[...consultas]
+              .sort((a, b) => {
+                // Not responded first
+                if (a.respondida !== b.respondida) {
+                  return a.respondida ? 1 : -1;
+                }
+                // Older first (ascending time)
+                return a.tiempo.localeCompare(b.tiempo);
+              })
+              .map(c => {
+                const style = getEstadoStyle(c.estado);
+                return (
+                  <div key={c.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-start gap-4">
+                    {c.avatar ? (
+                      <img src={c.avatar} alt={c.nombre} className="w-12 h-12 rounded-full object-cover" referrerPolicy="no-referrer" />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-[#ecedf7] flex items-center justify-center">
+                        <span className="material-symbols-outlined text-[#727785]">person</span>
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-bold text-sm text-[#191c23]">{c.nombre}</h3>
+                        <span className="text-[10px] text-[#727785]">{c.tiempo}</span>
+                      </div>
+                      <div className="mt-1">
+                        <span 
+                          className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                          style={{ color: style.color, backgroundColor: style.bg }}
+                        >
+                          {c.estado}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#414754] mt-2 leading-relaxed">{c.texto}</p>
                     </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start">
-                      <h3 className="font-bold text-sm text-[#191c23]">{c.nombre}</h3>
-                      <span className="text-[10px] text-[#727785]">{c.tiempo}</span>
-                    </div>
-                    <div className="mt-1">
-                      <span 
-                        className="px-2 py-0.5 rounded-full text-[10px] font-bold"
-                        style={{ color: style.color, backgroundColor: style.bg }}
-                      >
-                        {c.estado}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#414754] mt-2 leading-relaxed">{c.texto}</p>
+                    <button 
+                      onClick={() => toggleRespondida(c.id)}
+                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                        c.respondida ? 'bg-[#34A853] text-white' : 'border-2 border-[#c1c6d6] text-transparent'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-[16px] font-bold">check</span>
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => toggleRespondida(c.id)}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                      c.respondida ? 'bg-[#34A853] text-white' : 'border-2 border-[#c1c6d6] text-transparent'
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[16px] font-bold">check</span>
-                  </button>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         )}
       </main>

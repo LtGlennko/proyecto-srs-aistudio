@@ -4,6 +4,7 @@ interface HeaderProps {
   backLabel?: string;
   onBack?: () => void;
   showSettings?: boolean;
+  onSettingsClick?: () => void;
   rightAction?: React.ReactNode;
   title?: string;
   subtitle?: string;
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   backLabel, 
   onBack, 
   showSettings, 
+  onSettingsClick,
   rightAction,
   title,
   subtitle,
@@ -36,16 +38,19 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
         {!sinBack && (title || subtitle) && (
-          <div className="flex flex-col ml-2">
-            {title && <h1 className="font-manrope font-bold text-base leading-tight text-[#191c23]">{title}</h1>}
-            {subtitle && <span className="text-[10px] text-[#727785] font-medium">{subtitle}</span>}
+          <div className="flex flex-col ml-2 truncate">
+            {title && <h1 className="font-manrope font-bold text-base leading-tight text-[#191c23] truncate">{title}</h1>}
+            {subtitle && <span className="text-[10px] text-[#727785] font-medium truncate">{subtitle}</span>}
           </div>
         )}
       </div>
       <div className="flex-1 flex justify-end items-center gap-2">
         {!sinRight && rightAction}
         {!sinRight && showSettings && (
-          <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
+          <button 
+            onClick={onSettingsClick}
+            className="p-2 rounded-full hover:bg-slate-100 transition-colors"
+          >
             <span className="material-symbols-outlined text-slate-500">settings</span>
           </button>
         )}

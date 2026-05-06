@@ -1,18 +1,23 @@
 import React from 'react';
-import { ScreenProps } from '../../types';
+import { ScreenProps, Interaction } from '../../types';
 import { Header } from '../common/Header';
 import { Breadcrumb } from '../common/Breadcrumb';
 
-export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
+export const S21e: React.FC<ScreenProps> = ({ onNavigate, onSelectInteractionType, selectedCourse, selectedActivity }) => {
+  const handleTypeSelect = (type: Interaction['type']) => {
+    if (onSelectInteractionType) onSelectInteractionType(type);
+    onNavigate('S21f');
+  };
+
   return (
     <div className="bg-[#f9f9ff] font-inter text-[#191c23] min-h-screen relative overflow-hidden">
       {/* Background Content (Dimmed) */}
       <div className="flex flex-col h-screen w-full opacity-40">
         <Header 
-          backLabel="Volver" 
+          backLabel={selectedCourse?.code || 'Actividad'} 
           onBack={() => onNavigate('S21c')} 
         />
-        <Breadcrumb items={['Cursos', 'Lenguajes de Programación', 'H386-A', 'Introducción a la Programación']} />
+        <Breadcrumb items={['Mis Cursos', selectedCourse?.name || 'Curso', selectedActivity?.name || 'Actividad']} />
         <main className="flex-1 pt-[92px] px-6 py-4">
           <div className="mt-6">
             <div className="flex items-center gap-2 mb-8 border-b border-[#e0e0e0] pb-3">
@@ -42,7 +47,7 @@ export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
             <h3 className="text-[10px] font-semibold text-[#727785] uppercase tracking-widest mb-4">Encuestas</h3>
             <div className="grid grid-cols-2 gap-4">
               <button 
-                onClick={() => onNavigate('S21f')}
+                onClick={() => handleTypeSelect('opcion_multiple')}
                 className="bg-[#f2f3fd] p-6 rounded-lg flex flex-col items-center justify-center gap-3 active:bg-[#e6e8f2] transition-colors outline-none group"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#005bbf] shadow-sm group-active:scale-95 transition-transform">
@@ -51,7 +56,7 @@ export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
                 <span className="text-sm font-semibold text-[#191c23] text-center">Opción múltiple</span>
               </button>
               <button 
-                onClick={() => onNavigate('S21f')}
+                onClick={() => handleTypeSelect('verdadero_falso')}
                 className="bg-[#f2f3fd] p-6 rounded-lg flex flex-col items-center justify-center gap-3 active:bg-[#e6e8f2] transition-colors outline-none group"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#005bbf] shadow-sm group-active:scale-95 transition-transform">
@@ -66,7 +71,7 @@ export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
             <h3 className="text-[10px] font-semibold text-[#727785] uppercase tracking-widest mb-4">Opiniones</h3>
             <div className="grid grid-cols-2 gap-4">
               <button 
-                onClick={() => onNavigate('S21f')}
+                onClick={() => handleTypeSelect('nube_palabras')}
                 className="bg-[#f2f3fd] p-6 rounded-lg flex flex-col items-center justify-center gap-3 active:bg-[#e6e8f2] transition-colors outline-none group"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#005bbf] shadow-sm group-active:scale-95 transition-transform">
@@ -75,7 +80,7 @@ export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
                 <span className="text-sm font-semibold text-[#191c23] text-center">Nube de palabras</span>
               </button>
               <button 
-                onClick={() => onNavigate('S21f')}
+                onClick={() => handleTypeSelect('ranking')}
                 className="bg-[#f2f3fd] p-6 rounded-lg flex flex-col items-center justify-center gap-3 active:bg-[#e6e8f2] transition-colors outline-none group"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#005bbf] shadow-sm group-active:scale-95 transition-transform">
@@ -84,7 +89,7 @@ export const S21e: React.FC<ScreenProps> = ({ onNavigate }) => {
                 <span className="text-sm font-semibold text-[#191c23] text-center">Ranking</span>
               </button>
               <button 
-                onClick={() => onNavigate('S21f')}
+                onClick={() => handleTypeSelect('texto_libre')}
                 className="bg-[#f2f3fd] p-6 rounded-lg flex flex-col items-center justify-center gap-3 col-span-2 active:bg-[#e6e8f2] transition-colors outline-none group"
               >
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#005bbf] shadow-sm group-active:scale-95 transition-transform">
