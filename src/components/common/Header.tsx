@@ -31,10 +31,9 @@ export const Header: React.FC<HeaderProps> = ({
         {!sinBack && onBack && (
           <button 
             onClick={onBack} 
-            className="text-[#005bbf] font-bold text-sm flex items-center gap-1 hover:opacity-80 transition-opacity whitespace-nowrap"
+            className="text-[#005bbf] font-bold text-sm flex items-center gap-1 hover:opacity-80 transition-opacity whitespace-nowrap p-1"
           >
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
-            {backLabel && (hidePrefix ? backLabel : `Volver a ${backLabel}`)}
+            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
           </button>
         )}
         {!sinBack && (title || subtitle) && (
