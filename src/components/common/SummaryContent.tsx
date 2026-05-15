@@ -48,7 +48,7 @@ export const SummaryContent: React.FC<SummaryContentProps> = ({ questions, respo
               </li>
               <li className="flex items-center text-[#414754] text-sm">
                 <span className="w-1.5 h-1.5 bg-[#c1c6d6] rounded-full mr-2"></span>
-                Participantes en encuestas: {participatingStudents}
+                Participantes en evaluaciones: {participatingStudents}
               </li>
             </ul>
           </div>
@@ -116,9 +116,9 @@ export const SummaryContent: React.FC<SummaryContentProps> = ({ questions, respo
                       return (
                         <>
                           <BarChart data={data} />
-                          <div className="grid grid-cols-2 gap-2 mt-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
                             {data.map((d: any, i: number) => (
-                              <div key={i} className={`flex items-center gap-2 bg-white/50 p-2 rounded-lg relative overflow-hidden ${d.isCorrect ? 'border border-[#34A853]/50' : ''}`}>
+                              <div key={i} className={`flex items-center gap-2 bg-white/50 p-2 rounded-lg relative overflow-hidden border border-transparent ${d.isCorrect ? 'border-[#34A853]/50' : ''}`}>
                                 <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: d.color }} />
                                 <span className="text-[10px] font-bold text-[#414754] truncate flex-1">{d.label}</span>
                                 <div className="flex items-center gap-1 shrink-0">

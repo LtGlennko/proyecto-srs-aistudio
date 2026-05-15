@@ -28,6 +28,7 @@ export interface Interaction {
   id: number;
   text: string;
   description?: string;
+  feedback?: string;
   options: string[];
   correctOptions?: number[]; // indices of correct options
   type: 'opcion_multiple' | 'verdadero_falso' | 'nube_palabras' | 'ranking' | 'texto_libre';
@@ -40,6 +41,17 @@ export interface Interaction {
     charLimit?: number;
     answersPerStudent?: number;
   };
+}
+
+export interface Consultation {
+  id: number;
+  nombre: string;
+  texto: string;
+  tiempo: string;
+  avatar: string | null;
+  estado: string;
+  respondida: boolean;
+  activityId?: string;
 }
 
 export interface ScreenProps {
@@ -63,6 +75,9 @@ export interface ScreenProps {
   hasConsultation?: boolean;
   isAnonimo?: boolean;
   hasConsultationsDocente?: boolean;
+  consultas?: Consultation[];
+  onUpdateConsultation?: (consultation: Consultation) => void;
+  onAddConsultation?: (consultation: Consultation) => void;
   onSimulate?: () => void;
   onSent?: (esAnonimo: boolean) => void;
   hasCourse?: boolean;
@@ -76,6 +91,7 @@ export interface ScreenProps {
   selectedActivity?: Activity | null;
   onSelectActivity?: (activity: Activity) => void;
   questions?: Interaction[];
+  onReorderQuestions?: (activityId: string, newQuestions: Interaction[]) => void;
   questionsByActivity?: { [activityId: string]: Interaction[] };
   selectedInteractionType?: Interaction['type'];
   onSelectInteractionType?: (type: Interaction['type']) => void;

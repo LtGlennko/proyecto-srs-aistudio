@@ -48,9 +48,10 @@ export const Header: React.FC<HeaderProps> = ({
         {!sinRight && showSettings && (
           <button 
             onClick={onSettingsClick}
-            className="p-2 rounded-full hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-[#f2f3fd] text-[#005bbf] hover:bg-[#005bbf] hover:text-white transition-all group"
           >
-            <span className="material-symbols-outlined text-slate-500">settings</span>
+            <span className="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">edit</span>
+            <span className="text-[11px] font-bold">Editar</span>
           </button>
         )}
       </div>

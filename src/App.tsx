@@ -4,41 +4,41 @@
  */
 
 import React, { useState } from 'react';
-import { ScreenId, Course, Activity, Interaction } from './types';
+import { ScreenId, Course, Activity, Interaction, Consultation } from './types';
 import { LoginScreen } from './components/screens/LoginScreen';
-import { S01 } from './components/screens/S01';
-import { S01_1 } from './components/screens/S01_1';
-import { S01_Detail } from './components/screens/S01_Detail';
-import { S02 } from './components/screens/S02';
+import { StudentHome } from './components/screens/StudentHome';
+import { StudentWelcome } from './components/screens/StudentWelcome';
+import { ConsultationSuccess } from './components/screens/ConsultationSuccess';
+import { StudentCourses } from './components/screens/StudentCourses';
 import { ConsultaForm } from './components/screens/ConsultaForm';
-import { S04 } from './components/screens/S04';
-import { S06 } from './components/screens/S06';
-import { S22a } from './components/screens/S22a';
-import { S22b } from './components/screens/S22b';
-import { S22c } from './components/screens/S22c';
-import { S22b_p2 } from './components/screens/S22b_p2';
-import { S22c_p2 } from './components/screens/S22c_p2';
-import { S22_finalizada } from './components/screens/S22_finalizada';
-import { S19a } from './components/screens/S19a';
-import { S19b } from './components/screens/S19b';
-import { S19c } from './components/screens/S19c';
-import { S19d } from './components/screens/S19d';
-import { S20a } from './components/screens/S20a';
-import { S20b } from './components/screens/S20b';
-import { S20c } from './components/screens/S20c';
-import { S20d } from './components/screens/S20d';
-import { S20e } from './components/screens/S20e';
-import { S20_ActividadesDocente } from './components/screens/S20_ActividadesDocente';
-import { S21b } from './components/screens/S21b';
-import { S21c } from './components/screens/S21c';
-import { S21d } from './components/screens/S21d';
-import { S21e } from './components/screens/S21e';
-import { S21f } from './components/screens/S21f';
-import { S21h } from './components/screens/S21h';
-import { S21j } from './components/screens/S21j';
-import { S18 } from './components/screens/S18';
-import { S26 } from './components/screens/S26';
-import { S27 } from './components/screens/S27';
+import { StudentActivityPre } from './components/screens/StudentActivityPre';
+import { StudentClass } from './components/screens/StudentClass';
+import { StudentInteractionIntro } from './components/screens/StudentInteractionIntro';
+import { StudentInteractionQuestion } from './components/screens/StudentInteractionQuestion';
+import { StudentInteractionFeedback } from './components/screens/StudentInteractionFeedback';
+import { StudentInteractionQuestionv2 } from './components/screens/StudentInteractionQuestionv2';
+import { StudentInteractionFeedbackv2 } from './components/screens/StudentInteractionFeedbackv2';
+import { StudentInteractionEnd } from './components/screens/StudentInteractionEnd';
+import { TeacherDashboard } from './components/screens/TeacherDashboard';
+import { TeacherMenu } from './components/screens/TeacherMenu';
+import { TeacherCourses } from './components/screens/TeacherCourses';
+import { TeacherCourseCreate } from './components/screens/TeacherCourseCreate';
+import { TeacherCourseDetail } from './components/screens/TeacherCourseDetail';
+import { TeacherActivityAdd } from './components/screens/TeacherActivityAdd';
+import { TeacherActivityEdit } from './components/screens/TeacherActivityEdit';
+import { TeacherConsultationQueue } from './components/screens/TeacherConsultationQueue';
+import { TeacherActivityList } from './components/screens/TeacherActivityList';
+import { TeacherActivityDashboard } from './components/screens/TeacherActivityDashboard';
+import { TeacherInteractionStart } from './components/screens/TeacherInteractionStart';
+import { TeacherInteractionList } from './components/screens/TeacherInteractionList';
+import { TeacherInteractionType } from './components/screens/TeacherInteractionType';
+import { TeacherInteractionEdit } from './components/screens/TeacherInteractionEdit';
+import { TeacherInteractionAdd } from './components/screens/TeacherInteractionAdd';
+import { TeacherInteractionResults } from './components/screens/TeacherInteractionResults';
+import { TeacherSessionSummary } from './components/screens/TeacherSessionSummary';
+import { TeacherConsultations } from './components/screens/TeacherConsultations';
+import { TeacherCourseStats } from './components/screens/TeacherCourseStats';
+import { TeacherStudentList } from './components/screens/TeacherStudentList';
 import { PerfilScreen } from './components/screens/PerfilScreen';
 import { LiveView } from './components/screens/LiveView';
 import { MobileContainer } from './components/common/MobileContainer';
@@ -78,6 +78,51 @@ export default function App() {
     const saved = localStorage.getItem('gamifica_active_id');
     return saved ? parseInt(saved, 10) : null;
   });
+
+  const [consultas, setConsultas] = useState<Consultation[]>(() => {
+    const saved = localStorage.getItem('gamifica_consultas');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: 1,
+        nombre: "Anónimo",
+        texto: "¿Para qué es el espacio antes del contenido de la selectiva?",
+        tiempo: "13:05",
+        avatar: null,
+        estado: "Pendiente fuera de clase",
+        respondida: false
+      },
+      {
+        id: 2,
+        nombre: "Juan Pérez (2119000)",
+        texto: "¿Cuántas condiciones anidadas se pueden tener?",
+        tiempo: "13:18",
+        avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuC1meWSRlToSDIgVWCnnTwp-e4UXu_8vbNs-KLkeRGmgzd2eMz_oHCg0zya6mOtL4_qjQdwgRvMngYPvXMbJKCh9lva7WTPnN__QGZWClXWtsrgGn7u2E5iepVAHR0zPAQJ6tWGIfMv2SZy3l_JoNJlWx39L1HYiGjoNvhTd7GYruJouOf9fF2mtkG7Uzhl12-GpQeanh0H7dHoM1C2UMtJxNnJNYc7QwVrMtIYCfeO3ZiJhv542oPAgJQgR7hK2dvqzU4cdik41jM",
+        estado: "Pendiente fuera de clase",
+        respondida: false
+      },
+      {
+        id: 3,
+        nombre: "María López (2219000)",
+        texto: "¿Es necesario usar llaves cada vez que se utilice el if y else?",
+        tiempo: "14:07",
+        avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuAZrsG9QrVFZZyDlYDZCer1tmaSLOCNhJ04iU3jriCLoizNZY634iabs1AMbtZSdoJsSnjbvYBDF_w6CK-O20wtWONaUVBFNN-6VPrO_m9Kj8rHIFfgm2Ojf5QiPxkrwn-fDCNm2MiadYp5BhRNTCdEFi4WVPwtwrveR05kq4flzx-j_-0FizZ1qRbAx65a9xUzyaYzgN5nga6PS2UlhU2ZqGDeNLu6-bVuxT5nwzNrgfQpYH0JwIw_xtr1TAmGipXEKrifo8YcTxg",
+        estado: "Pendiente de respuesta",
+        respondida: false
+      }
+    ];
+  });
+
+  const handleUpdateConsultation = (updated: Consultation) => {
+    const newConsultas = consultas.map(c => c.id === updated.id ? updated : c);
+    setConsultas(newConsultas);
+    localStorage.setItem('gamifica_consultas', JSON.stringify(newConsultas));
+  };
+
+  const handleAddConsultation = (consultation: Consultation) => {
+    const newConsultas = [...consultas, consultation];
+    setConsultas(newConsultas);
+    localStorage.setItem('gamifica_consultas', JSON.stringify(newConsultas));
+  };
 
   const [responseCounts, setResponseCounts] = useState<{ [id: number]: number }>(() => {
     const saved = localStorage.getItem('gamifica_response_counts');
@@ -272,6 +317,15 @@ export default function App() {
     setSelectedCourse(updatedCourse);
   };
 
+  const handleReorderQuestions = (activityId: string, newQuestions: Interaction[]) => {
+    const newMap = {
+      ...questionsByActivity,
+      [activityId]: newQuestions
+    };
+    setQuestionsByActivity(newMap);
+    localStorage.setItem('gamifica_questions_by_activity', JSON.stringify(newMap));
+  };
+
   const renderScreen = () => {
     const commonProps = {
       onNavigate: setCurrentScreen,
@@ -282,6 +336,7 @@ export default function App() {
       hasInteraction,
       onInteractionCreated: handleInteractionCreated,
       onInteractionUpdated: handleInteractionUpdated,
+      onReorderQuestions: handleReorderQuestions,
       editingInteraction,
       onSetEditingInteraction: setEditingInteraction,
       activeInteractionId,
@@ -300,6 +355,9 @@ export default function App() {
       hasConsultation,
       isAnonimo,
       hasConsultationsDocente,
+      consultas,
+      onUpdateConsultation: handleUpdateConsultation,
+      onAddConsultation: handleAddConsultation,
       onSimulate: () => setHasConsultationsDocente(true),
       onSent: (anon: boolean) => {
         setHasConsultation(true);
@@ -319,7 +377,7 @@ export default function App() {
       onSelectActivity: (activity: Activity) => {
         setSelectedActivity(activity);
         if (activity) {
-          setCurrentScreen(isActivityFinishedMap[activity.id] ? 'S18' : 'S21c');
+          setCurrentScreen(isActivityFinishedMap[activity.id] ? 'S18' : 'S21h');
         } else {
           setCurrentScreen('S21b');
         }
@@ -335,40 +393,40 @@ export default function App() {
     switch (currentScreen) {
       case 'Login': return <LoginScreen onNavigate={setCurrentScreen} onSelectRole={setUserRole} />;
       case 'Perfil': return <PerfilScreen onNavigate={setCurrentScreen} userRole={userRole} />;
-      case 'S19b': return <S19b {...commonProps} />;
-      case 'S19c': return <S19c {...commonProps} />;
-      case 'S20d': return <S20d {...commonProps} />;
-      case 'S20e': return <S20e {...commonProps} />;
-      case 'S21b': return <S21b {...commonProps} />;
-      case 'S21c': return <S21c {...commonProps} />;
-      case 'S21e': return <S21e {...commonProps} />;
-      case 'S21f': return <S21f {...commonProps} onInteractionCreated={handleInteractionCreated} />;
-      case 'S18': return <S18 {...commonProps} />;
-      case 'S26': return <S26 {...commonProps} />;
-      case 'S27': return <S27 {...commonProps} />;
-      case 'S01': return <S01 onNavigate={setCurrentScreen} />;
-      case 'S01_1': return <S01_1 onNavigate={setCurrentScreen} />;
-      case 'S01_Detail': return <S01_Detail onNavigate={setCurrentScreen} hasConsultation={hasConsultation} isAnonimo={isAnonimo} />;
-      case 'S02': return <S02 onNavigate={setCurrentScreen} />;
+      case 'S19b': return <TeacherMenu {...commonProps} />;
+      case 'S19c': return <TeacherCourses {...commonProps} />;
+      case 'S20d': return <TeacherConsultationQueue {...commonProps} />;
+      case 'S20e': return <TeacherActivityList {...commonProps} />;
+      case 'S21b': return <TeacherInteractionStart {...commonProps} />;
+      case 'S21c': return <TeacherInteractionList {...commonProps} />;
+      case 'S21e': return <TeacherInteractionEdit {...commonProps} />;
+      case 'S21f': return <TeacherInteractionAdd {...commonProps} onInteractionCreated={handleInteractionCreated} />;
+      case 'S18': return <TeacherConsultations {...commonProps} />;
+      case 'S26': return <TeacherCourseStats {...commonProps} />;
+      case 'S27': return <TeacherStudentList {...commonProps} />;
+      case 'S01': return <StudentHome onNavigate={setCurrentScreen} />;
+      case 'S01_1': return <StudentWelcome onNavigate={setCurrentScreen} />;
+      case 'S01_Detail': return <ConsultationSuccess onNavigate={setCurrentScreen} hasConsultation={hasConsultation} isAnonimo={isAnonimo} />;
+      case 'S02': return <StudentCourses onNavigate={setCurrentScreen} />;
       case 'S03': return <ConsultaForm onNavigate={setCurrentScreen} onSent={commonProps.onSent} />;
-      case 'S04': return <S04 onNavigate={setCurrentScreen} />;
+      case 'S04': return <StudentActivityPre onNavigate={setCurrentScreen} />;
       case 'S05': return <ConsultaForm onNavigate={setCurrentScreen} onSent={commonProps.onSent} />;
-      case 'S06': return <S06 onNavigate={setCurrentScreen} />;
-      case 'S22a': return <S22a onNavigate={setCurrentScreen} />;
-      case 'S22b': return <S22b onNavigate={setCurrentScreen} />;
-      case 'S22c': return <S22c onNavigate={setCurrentScreen} />;
-      case 'S22b_p2': return <S22b_p2 onNavigate={setCurrentScreen} />;
-      case 'S22c_p2': return <S22c_p2 onNavigate={setCurrentScreen} />;
-      case 'S22_finalizada': return <S22_finalizada onNavigate={setCurrentScreen} />;
-      case 'S19a': return <S19a onNavigate={setCurrentScreen} />;
-      case 'S19d': return <S19d onNavigate={setCurrentScreen} />;
-      case 'S20a': return <S20a onNavigate={setCurrentScreen} />
-      case 'S20b': return <S20b onNavigate={setCurrentScreen} />;
-      case 'S20c': return <S20c onNavigate={setCurrentScreen} />;
-      case 'S20_ActividadesDocente': return <S20_ActividadesDocente {...commonProps} />;
-      case 'S21d': return <S21d onNavigate={setCurrentScreen} />;
-      case 'S21h': return <S21h {...commonProps} />;
-      case 'S21j': return <S21j onNavigate={setCurrentScreen} />;
+      case 'S06': return <StudentClass onNavigate={setCurrentScreen} />;
+      case 'S22a': return <StudentInteractionIntro onNavigate={setCurrentScreen} />;
+      case 'S22b': return <StudentInteractionQuestion onNavigate={setCurrentScreen} />;
+      case 'S22c': return <StudentInteractionFeedback onNavigate={setCurrentScreen} />;
+      case 'S22b_p2': return <StudentInteractionQuestionv2 onNavigate={setCurrentScreen} />;
+      case 'S22c_p2': return <StudentInteractionFeedbackv2 onNavigate={setCurrentScreen} />;
+      case 'S22_finalizada': return <StudentInteractionEnd onNavigate={setCurrentScreen} />;
+      case 'S19a': return <TeacherDashboard onNavigate={setCurrentScreen} />;
+      case 'S19d': return <TeacherCourseCreate onNavigate={setCurrentScreen} />;
+      case 'S20a': return <TeacherCourseDetail onNavigate={setCurrentScreen} />
+      case 'S20b': return <TeacherActivityAdd onNavigate={setCurrentScreen} />;
+      case 'S20c': return <TeacherActivityEdit onNavigate={setCurrentScreen} />;
+      case 'S20_ActividadesDocente': return <TeacherActivityDashboard {...commonProps} />;
+      case 'S21d': return <TeacherInteractionType onNavigate={setCurrentScreen} />;
+      case 'S21h': return <TeacherInteractionResults {...commonProps} />;
+      case 'S21j': return <TeacherSessionSummary onNavigate={setCurrentScreen} />;
       default: return <LoginScreen onNavigate={setCurrentScreen} onSelectRole={setUserRole} />;
     }
   };

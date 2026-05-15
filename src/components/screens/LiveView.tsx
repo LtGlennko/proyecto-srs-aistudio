@@ -54,6 +54,18 @@ export const LiveView: React.FC<LiveViewProps> = ({ activeInteraction }) => {
                   {displayInteraction.description}
                 </p>
               )}
+
+              {displayInteraction.feedback && (
+                <div className="mt-8 p-6 bg-white/5 border border-white/10 rounded-2xl max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
+                  <div className="flex items-center justify-center gap-2 mb-3 text-[#005bbf]">
+                    <span className="material-symbols-outlined">info</span>
+                    <span className="text-[12px] font-black uppercase tracking-widest">Retroalimentación</span>
+                  </div>
+                  <p className="text-white text-lg md:text-xl font-medium leading-relaxed italic">
+                    "{displayInteraction.feedback}"
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Interaction Type Indicator */}
